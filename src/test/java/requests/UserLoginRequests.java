@@ -135,9 +135,7 @@ public class UserLoginRequests extends CommonUtils {
     public String getStatusText() {
         return currentRow.get("StatusText");
     }
-<<<<<<< HEAD
-   
-=======
+
 
 	public void saveToken1(Response response) {
         if (response.getStatusCode() == 200 || response.getStatusCode() == 201) {
@@ -160,7 +158,5 @@ public class UserLoginRequests extends CommonUtils {
         }		
 	}
    
-	
 
->>>>>>> final commit
 }
