@@ -20,6 +20,7 @@ import pojo.UserPojo;
 import utilities.CommonUtils;
 import utilities.ExcelUtils;
 import utilities.TokenManager;
+import utilities.TokenManager.TokenManager1;
 
 public class UserRequest extends CommonUtils {
 	private List<Map<String, String>> excelData;
@@ -33,7 +34,7 @@ public class UserRequest extends CommonUtils {
         RestAssured.baseURI = CommonUtils.endpoints.getString("baseUrl");
         TokenManager.setToken("");
         return given()
-                .header("Authorization", "Bearer " + TokenManager.getToken());
+                .header("Authorization", "Bearer " + TokenManager1.getToken());
     }
     // ---------------- LOAD USER FROM EXCEL ----------------
     public void createUser(String scenario)
@@ -60,7 +61,7 @@ public class UserRequest extends CommonUtils {
         } else if (scenarioName.contains("InvalidBaseURI")) {
             RestAssured.baseURI = CommonUtils.endpoints.getString("invalidBaseUrl");
             requestSpec = given()
-                    .header("Authorization", "Bearer " + TokenManager.getToken());
+                    .header("Authorization", "Bearer " + TokenManager1.getToken());
         }
         // Always set content type for LMS POST
         requestSpec.contentType(currentRow.get("ContentType"));

@@ -15,6 +15,7 @@ import payload.UserPayload1;
 import pojo.UserPojo1;
 import utilities.CommonUtils;
 import utilities.TokenManager;
+import utilities.TokenManager.TokenManager1;
 
 public class UserRequest1 extends CommonUtils {
 	 private Map<String, String> currentRow;
@@ -25,7 +26,7 @@ public class UserRequest1 extends CommonUtils {
 	    public RequestSpecification setAuth() {
 	        RestAssured.baseURI = CommonUtils.endpoints.getString("baseUrl");
 	        TokenManager.setToken("");
-	        return given().header("Authorization", "Bearer " + TokenManager.getToken());
+	        return given().header("Authorization", "Bearer " + TokenManager1.getToken());
 	    }
 
 	    public void createUser(String scenario) throws IOException, InvalidFormatException, ParseException {
@@ -49,7 +50,7 @@ public class UserRequest1 extends CommonUtils {
 	            requestSpec = given().header("Authorization", "Bearer " + INVALID_TOKEN);
 	        } else if (scenarioName.contains("InvalidBaseURI")) {
 	            RestAssured.baseURI = CommonUtils.endpoints.getString("invalidBaseUrl");
-	            requestSpec = given().header("Authorization", "Bearer " + TokenManager.getToken());
+	            requestSpec = given().header("Authorization", "Bearer " + TokenManager.getToken1());
 	        }
 	        String operationType = currentRow.get("OperationType");
 	        if (!"GET".equalsIgnoreCase(operationType) && !"DELETE".equalsIgnoreCase(operationType)) {

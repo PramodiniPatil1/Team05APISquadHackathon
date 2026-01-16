@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import commons.Commons;
 import utilities.TokenManager;
+import utilities.TokenManager.TokenManager1;
 import payload.ProgramBatchPayload;
 import pojo.ProgramBatchPojo;
 import io.restassured.RestAssured;
@@ -32,7 +33,7 @@ public class ProgramBatchRequests extends CommonUtils {
     	System.out.println("Base URI is: "+endpoints.getString("baseUrl")+" and Token is: "+TokenManager.getToken());
         RestAssured.baseURI = endpoints.getString("baseUrl");
         return given()
-                .header("Authorization", "Bearer " + TokenManager.getToken());
+                .header("Authorization", "Bearer " + TokenManager1.getToken());
     }
     // Method for scenarios that NEED batch object (POST/PUT)
     public void createBatch(String scenario)

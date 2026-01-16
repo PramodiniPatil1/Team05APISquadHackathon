@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-
-
-@Logout
-Scenario Outline: Admin logout
-Given Admin sets authorization "<authType>" and creates logout request
-When Admin calls login HTTPS method with endpoint
-Then Admin validates response
-
-Examples:
-| authType     |
-| Bearer Token |
-| No Auth      |
-| Old Token    |
-
-=======
 @program
 Feature: Validating Program Module API
 Background:
@@ -54,4 +38,4 @@ Scenario Outline: Check if Admin is able to delete Valid/Invalid UserID
       |Scenario|
       |Delete with Valid UserID|
       |Delete with Invalid UserID|
->>>>>>> final commit
+
