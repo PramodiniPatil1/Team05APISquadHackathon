@@ -25,7 +25,6 @@ public class ProgramBatchPayload {
     private final Logger LOGGER = LogManager.getLogger(ProgramBatchPayload.class);
     String sheetName="Batch";
     private static final String FILE_PATH = "src/test/resources/batchDescriptionStorage.json";
-   
     public Map<String, Object> getDataFromExcel(String scenario)
             throws IOException, ParseException, InvalidFormatException {
     	Map<String, String> currentRow = CommonUtils.getCurrentRow(scenario, sheetName);
@@ -42,11 +41,11 @@ public class ProgramBatchPayload {
     		        throw new IllegalArgumentException("Batch name is missing in Excel for scenario: " + scenario);
     		    }
     		    LOGGER.info("Using batch name from Excel for scenario '{}': {}", scenario, batchName);
-    		   
+    		  
     		} else if ("MissingBatchNameBatchPost".equalsIgnoreCase(scenario.trim())) {
     		    batchName = " ";
     		    LOGGER.info("Setting empty batchName for 'MissingBatchNamePost' test scenario");
-    		   
+    		  
     		} else {
     		     Random random = new Random();
     		    String randomDigits = String.format("%02d", random.nextInt(100000));
@@ -100,13 +99,10 @@ public class ProgramBatchPayload {
             batchStatus,
             programId
          );
-         
         LOGGER.info("Created batch from Excel: {}", batchName);
         Map<String, Object> batchDetails = new HashMap<>();
         batchDetails.put("batch", batch);
         batchDetails.put("currentRow", currentRow);
         return batchDetails;
        }
-
-
 }

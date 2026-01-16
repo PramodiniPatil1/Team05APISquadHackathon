@@ -24,8 +24,46 @@ public class ProgramBatchPojo {
     private String batchStatus;
     @JsonProperty("programId")
     private int programId;
-    
-    
+
+    public String getbatchDescriptions() {
+		return batchDescription;
+	}
+	// Setter Methods
+	public void setbatchDescription( String batchDescription ) {
+		this.batchDescription = batchDescription;
+	}
+	
+	 public String getbatchName() {
+			return batchName;
+		}
+		// Setter Methods
+		public void setbatchName( String batchName ) {
+			this.batchName = batchName;
+		}
+		
+		public int getbatchNoOfClasses() {
+			return batchNoOfClasses;
+		}
+		// Setter Methods
+		public void setbatchNoOfClasses( int batchNoOfClasses ) {
+			this.batchNoOfClasses = batchNoOfClasses;
+		}
+		
+		public int getprogramId() {
+			return programId;
+		}
+		// Setter Methods
+		public void setprogramId( int programId ) {
+			this.programId = programId;
+		}
+		
+		 public String getbatchStatus() {
+				return batchStatus;
+			}
+			// Setter Methods
+			public void setbatchStatus( String batchStatus ) {
+				this.batchStatus = batchStatus;
+			}
 }
 
 

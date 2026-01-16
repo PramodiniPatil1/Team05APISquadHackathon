@@ -24,7 +24,7 @@ Feature: User Controller Operations
   @ResetPassword
   Scenario Outline: Admin Reset Password Validation
     Given Admin sets the auth "<AuthType>"
-    And Admin creates reset password request with "<ScenarioName>"
+    Given Admin creates reset password request with "<ScenarioName>"
     When Admin calls login HTTPS method with endpoint
     Then Admin validates response
 
@@ -34,6 +34,5 @@ Feature: User Controller Operations
 #      | valid email and old password           | No Auth      |
 #      | special characters in password         | Bearer Token |
 #      | invalid email                          | Bearer Token |
-      
       
       

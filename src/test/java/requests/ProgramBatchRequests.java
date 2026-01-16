@@ -61,16 +61,16 @@ public class ProgramBatchRequests extends CommonUtils {
     }
     //-----------------Build Requests-----------------
       public RequestSpecification buildRequest(RequestSpecification requestSpec){
-	 
+	
     	  if (requestSpec == null) {
     	        throw new IllegalStateException("RequestSpecification is not initialized.");
     	    }
     	  if (currentRow == null) {
               throw new IllegalStateException("currentRow is not initialized. Call createBatch() or loadScenarioData() first.");
           }
-    	   
+    	  
     	    String scenarioName = currentRow.get("ScenarioName");
-    	   
+    	  
     	    // Handle authentication
     	    if (scenarioName.contains("NoAuth")) {
     	        return given();
@@ -82,28 +82,28 @@ public class ProgramBatchRequests extends CommonUtils {
     	        return given()
     	                .header("Authorization", "Bearer " + TokenManager.getToken());
     	    }
-    	   
+    	  
     	    // For GET/DELETE operations, don't set Content-Type
     	    boolean isGetOrDeleteOperation = scenarioName.contains("GetBatch") ||
     	                                     scenarioName.contains("DeleteBatch");
     	   if (isGetOrDeleteOperation) {
     	        return requestSpec;
     	    }
-    	   
+    	  
     	    // For POST/PUT operations
     	    String contentType = currentRow.get("ContentType");
     	    if (contentType != null && !contentType.trim().isEmpty()) {
     	        requestSpec = requestSpec.contentType(contentType);
     	    }
-    	   
+    	  
     	    // Conditionally add request body for POST/PUT operations
     	    if (!scenarioName.contains("WithoutRequestBody") &&
     	        !scenarioName.contains("Get") &&
     	        !scenarioName.contains("Delete")) {
     	    	
-    	    	requestSpec.body(batch);    	    
+    	    	requestSpec.body(batch);    	   
     	        }
-    	   
+    	  
     	    return requestSpec;
    }
     public Response sendRequest(RequestSpecification requestSpec) {
@@ -151,16 +151,16 @@ public class ProgramBatchRequests extends CommonUtils {
 	public void validateBatchResponseBodyDetails(Response response) {
 			SoftAssert sa = new SoftAssert();
 			String actualBatchName = response.jsonPath().getString("batchName");
-			sa.assertEquals(actualBatchName, batch.getBatchName(), "Batch Name in response does not match!");
+			sa.assertEquals(actualBatchName, batch.getbatchName(), "Batch Name in response does not match!");
 			String actualBatchDescription = response.jsonPath().getString("batchDescription");
 			System.out.println(currentRow);
-			sa.assertEquals(actualBatchDescription, batch.getBatchDescription(), "Batch Description in response does not match!");
+			sa.assertEquals(actualBatchDescription, batch.getbatchDescriptions(), "Batch Description in response does not match!");
 			String actualBatchStatus = response.jsonPath().getString("batchStatus");
-			sa.assertEquals(actualBatchStatus, batch.getBatchStatus(), "Batch Status in response does not match!");
+			sa.assertEquals(actualBatchStatus, batch.getbatchStatus(), "Batch Status in response does not match!");
 				
 			
 			int actualbatchNoOfClasses = response.jsonPath().getInt("batchNoOfClasses");
-			sa.assertEquals(actualbatchNoOfClasses, batch.getBatchNoOfClasses(), "No Of Batch Classes in response does not match!");
+			sa.assertEquals(actualbatchNoOfClasses, batch.getbatchNoOfClasses(), "No Of Batch Classes in response does not match!");
 			
 			sa.assertAll();
 		}
@@ -168,13 +168,13 @@ public class ProgramBatchRequests extends CommonUtils {
 	
 	public void createGetRequestByProgramId(String scenario)
 	        throws IOException, InvalidFormatException, ParseException {
-	   
+	  
 	    // Get data from Excel (same method can be reused)
 	    Map<String, Object> batchDetails = new ProgramBatchPayload().getDataFromExcel(scenario);
-	   
+	  
 	    if (batchDetails != null) {
 	        this.currentRow = (Map<String, String>) batchDetails.get("currentRow");
-	       
+	      
 	        // For GET requests, we might not need batch object
 	        // But we need programId from currentRow
 	        if (batchDetails.get("batch") != null) {
@@ -183,9 +183,9 @@ public class ProgramBatchRequests extends CommonUtils {
 	    }
 	}
 //	private String getProgramIdForScenario(String endpointType, String excelProgramId) {
-//	   
+//	  
 //	    String scenarioName = currentRow.get("ScenarioName");
-//	   
+//	  
 //	    if ("valid Program Id".equalsIgnoreCase(scenarioName.trim())) {
 //	        // Use a valid existing programId from Commons
 //	        return String.valueOf(Commons.getProgramId());
@@ -208,26 +208,26 @@ public class ProgramBatchRequests extends CommonUtils {
 	public void validateGetBatchByProgramIdResponse(Response response) {
 	    SoftAssert sa = new SoftAssert();
 	    String scenarioName = currentRow.get("ScenarioName");
-	   
+	  
 	    if ("valid Program Id".equalsIgnoreCase(scenarioName.trim())) {
 	        // Validate response contains array of batches
 	        List<Map<String, Object>> batches = response.jsonPath().getList("$");
 	        sa.assertNotNull(batches, "Response should contain batches array");
-	       
+	      
 	        // If there are batches, validate their structure
 	        if (batches != null && !batches.isEmpty()) {
 	            Map<String, Object> firstBatch = batches.get(0);
 	            sa.assertTrue(firstBatch.containsKey("batchId"), "Batch should have batchId");
 	            sa.assertTrue(firstBatch.containsKey("batchName"), "Batch should have batchName");
 	            sa.assertTrue(firstBatch.containsKey("programId"), "Batch should have programId");
-	           
+	          
 	            // Validate programId matches
 	            int responseProgramId = (int) firstBatch.get("programId");
 	            int expectedProgramId = Integer.parseInt(currentRow.get("programId"));
 	            sa.assertEquals(responseProgramId, expectedProgramId, "Program ID should match");
 	        }
 	    }
-	   
+	  
 	    sa.assertAll();
 	}
 
